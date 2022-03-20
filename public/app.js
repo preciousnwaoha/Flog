@@ -12,12 +12,19 @@ const ul = document.querySelector("ul");
 const list = new ListTemplate(ul);
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    let values = [toFrom.value, details.value, amount.valueAsNumber];
     let doc;
     if (type.value) {
-        doc = new Invoice(toFrom.value, details.value, amount.valueAsNumber);
+        doc = new Invoice(...values);
     }
     else {
-        doc = new Payment(toFrom.value, details.value, amount.valueAsNumber);
+        doc = new Payment(...values);
     }
     list.render(doc, type.value, "end");
 });
+// Turple
+let arr = ["ryu", 25, true];
+let tup = ["ryu", 25, true];
+tup[0] = "kens";
+tup[1] = 20;
+// tup[0] = 5

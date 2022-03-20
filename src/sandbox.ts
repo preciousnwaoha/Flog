@@ -154,3 +154,61 @@
 // logDetails = (ninja: person) => {
 //   console.log(`${ninja.name} is ${ninja.age} years old`);
 // };
+
+
+// // GENERICS
+
+// const addUID = <T extends { name: string}>(obj: T) => {
+//     let uid = Math.floor(Math.random() * 100)
+//     return {...obj, uid}
+// }
+
+// let docOne = addUID({name: "precious", age: 21})
+// // let docTwo = addUID("some string")
+
+// console.log(docOne.name)
+
+// // Using Generics with interfaces
+// interface Resource<T> {
+//     uid: number;
+//     resourceName: string;
+//     data: T;
+// }
+
+// const docThree: Resource<object> = {
+//     uid: 1,
+//     resourceName: "person",
+//     data: { name: "ghost"},
+// }
+
+// const docFour: Resource<string[]> = {
+//     uid: 2,
+//     resourceName: "shoppinglist",
+//     data: ['bread', 'milk', 'toilet paper'],
+// }
+
+
+// // ENUMS
+// enum ResourceType { BOOK, AUTHOR, FILM, DIRECTOR, PERSON}
+
+// interface Resource<T> {
+//     uid: number;
+//    resourceType: ResourceType;
+//     data: T;
+// }
+
+// const docOne: Resource<object> = {
+//     uid: 1,
+//    resourceType: ResourceType.BOOK,
+//     data: { title: "ghost of the wind"},
+// }
+
+// const docTwo: Resource<string[]> = {
+//     uid: 2,
+//    resourceType: ResourceType.PERSON,
+//     data: ['bread', 'milk', 'toilet paper'],
+// }
+
+// console.log(docOne)
+// console.log(docTwo)
+

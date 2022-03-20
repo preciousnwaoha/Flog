@@ -1,42 +1,7 @@
-// Inferences
-interface IsPerson {
-    name: string;
-    age: number;
-    speak(a: string): void;
-    spend(a: number): number;
-}
-
-const me : IsPerson = {
-    name: "Precious",
-    age: 30,
-    speak(text: string): void {
-        console.log(text)
-    },
-    spend(amount: number): number {
-        console.log("I soent ", amount)
-        return amount
-    }
-}
-
-const greetPerson = (person: IsPerson) => {
-    console.log("hello", person.name)
-}
-greetPerson(me)
-console.log(me)
-
-import { Invoice } from "./classes/Invoice.js"
-
-const invOne = new Invoice("precious", "work on the mario website", 250);
-const invTwo = new Invoice("chi", "work on the chi website", 300);
-
-let invoices: Invoice[] = [];
-invoices.push(invOne);
-invoices.push(invTwo);
-
-invoices.forEach(inv => {
-    console.log(inv.client, inv.amount, inv.format());
-})
-
+import { Payment } from "./classes/Payment.js";
+import { Invoice } from "./classes/Invoice.js";
+import { HasFormatter } from "./interfaces/HasFormatter.js";
+import { ListTemplate } from "./classes/ListTemplate.js";
 
 const form = document.querySelector(".new-item-form") as HTMLFormElement;
 
@@ -46,8 +11,20 @@ const toFrom = document.querySelector("#tofrom") as HTMLInputElement;
 const details = document.querySelector("#details") as HTMLInputElement;
 const amount = document.querySelector("#amount") as HTMLInputElement;
 
+// List template instance
+const ul = document.querySelector("ul") as HTMLUListElement;
+const list  = new ListTemplate(ul)
+
 form.addEventListener("submit", (e: Event) => {
   e.preventDefault();
 
-  console.log(type.value, toFrom.value, details.value, amount.valueAsNumber);
+  let doc: HasFormatter;
+
+  if (type.value) {
+    doc = new Invoice(toFrom.value, details.value, amount.valueAsNumber);
+  } else {
+    doc = new Payment(toFrom.value, details.value, amount.valueAsNumber);
+  }
+
+  list.render(doc, type.value, "end")
 });

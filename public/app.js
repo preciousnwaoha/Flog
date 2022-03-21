@@ -1,6 +1,7 @@
 import { Payment } from "./classes/Payment.js";
 import { Invoice } from "./classes/Invoice.js";
 import { ListTemplate } from "./classes/ListTemplate.js";
+const noOfItemsElement = document.querySelector(".no-of-items");
 const form = document.querySelector(".new-item-form");
 // inputs
 const type = document.querySelector("#type");
@@ -10,6 +11,7 @@ const amount = document.querySelector("#amount");
 // List template instance
 const ul = document.querySelector("ul");
 const list = new ListTemplate(ul);
+let noOfItems = 0;
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     let values = [toFrom.value, details.value, amount.valueAsNumber];
@@ -21,6 +23,8 @@ form.addEventListener("submit", (e) => {
         doc = new Payment(...values);
     }
     list.render(doc, type.value, "end");
+    noOfItems++;
+    noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;
 });
 // Turple
 let arr = ["ryu", 25, true];

@@ -1,9 +1,10 @@
 :root {
-  --primary: #0e0f18;
+  --primary: #f3f3f3;
+  --primary-two: #0e0f18; 
   --secondary: #229774;
   --white: #f4f5f5;
-  --glass: transparent;
-  --soft-dark: rgb(35, 37, 39);
+  --glass: rgba(0, 0, 0, 0.05);
+  --soft-dark: #bbbbbb;
 }
 
 body {
@@ -15,19 +16,36 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  align-items:center
-  border: 1px solid red;
+  align-items:center;
+  padding-left: 20px;
+  padding-right: 20px;
   border-bottom: 1px solid var(--soft-dark);
 
 }
 
 h1 {
   display: inline-block;
-  border: 1px solid blue;
-  margin: 40px auto;
   color: var(--secondary);
   text-align: center;
+  cursor: pointer;
 }
+
+.theme {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.theme .fa-palette {
+  color: var(--primary-two);
+  font-size: 40px;
+}
+.theme .fa-palette:hover {
+  color: var(--secondary)
+}
+
+
 
 .effect-wrap .effect {
   position: absolute;
@@ -90,7 +108,7 @@ h1 {
   height: 100px;
   width: 100px;
   right: 5%;
-  top: 25%;
+  top: 20%;
   display: flex;
   justify-content: space-between;
   border-radius: 50%;
@@ -163,7 +181,7 @@ ul {
   height: calc(100% -50px);
   max-height:400px;
   padding: 25px;
-  background: var(--white);
+  background: var(--primary-two);
   list-style-type: none;
   margin: 0;
   border-radius: 10px;
@@ -230,20 +248,25 @@ form {
 }
 
 .glass-div {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--glass);
   backdrop-filter: blur(8px);
+}
+
+.field {
+  width: 80%;
 }
 
 label {
   display: block;
   font-weight: bold;
   font-size: 0.8em;
-  color: #fafafa;
+  color: var(--primary-two);
   margin: 16px 0 6px;
 }
 input,
 select {
-  background: var(--white);
+  background: var(--primary-two);
+  color: var(--primary);
   padding: 8px;
   border: 1px solid #e1e1e1;
   border-radius: 8px;

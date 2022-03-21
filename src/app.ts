@@ -2,8 +2,16 @@ import { Payment } from "./classes/Payment.js";
 import { Invoice } from "./classes/Invoice.js";
 import { HasFormatter } from "./interfaces/HasFormatter.js";
 import { ListTemplate } from "./classes/ListTemplate.js";
+import { changeTheme } from "./classes/Theme.js";
 
-const noOfItemsElement = document.querySelector(".no-of-items") as HTMLDivElement;
+// Theme
+const theme = document.querySelector(".theme") as HTMLDivElement;
+
+theme.addEventListener("click", changeTheme);
+
+const noOfItemsElement = document.querySelector(
+  ".no-of-items"
+) as HTMLDivElement;
 
 const form = document.querySelector(".new-item-form") as HTMLFormElement;
 
@@ -15,14 +23,18 @@ const amount = document.querySelector("#amount") as HTMLInputElement;
 
 // List template instance
 const ul = document.querySelector("ul") as HTMLUListElement;
-const list  = new ListTemplate(ul)
+const list = new ListTemplate(ul);
 
-let noOfItems: number =  0;
+let noOfItems: number = 0;
 
 form.addEventListener("submit", (e: Event) => {
   e.preventDefault();
 
-  let values: [string, string, number] = [toFrom.value, details.value, amount.valueAsNumber]
+  let values: [string, string, number] = [
+    toFrom.value,
+    details.value,
+    amount.valueAsNumber,
+  ];
 
   let doc: HasFormatter;
 
@@ -32,17 +44,16 @@ form.addEventListener("submit", (e: Event) => {
     doc = new Payment(...values);
   }
 
-  list.render(doc, type.value, "end")
+  list.render(doc, type.value, "end");
   noOfItems++;
-  noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`
+  noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;
 });
-
 
 // Turple
 
-let arr = ["ryu", 25, true]
+let arr = ["ryu", 25, true];
 
-let tup: [string, number, boolean] = ["ryu", 25, true]
-tup[0] = "kens"
-tup[1] = 20
+let tup: [string, number, boolean] = ["ryu", 25, true];
+tup[0] = "kens";
+tup[1] = 20;
 // tup[0] = 5

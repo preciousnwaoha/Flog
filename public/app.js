@@ -1,6 +1,10 @@
 import { Payment } from "./classes/Payment.js";
 import { Invoice } from "./classes/Invoice.js";
 import { ListTemplate } from "./classes/ListTemplate.js";
+import { changeTheme } from "./classes/Theme.js";
+// Theme
+const theme = document.querySelector(".theme");
+theme.addEventListener("click", changeTheme);
 const noOfItemsElement = document.querySelector(".no-of-items");
 const form = document.querySelector(".new-item-form");
 // inputs
@@ -14,7 +18,11 @@ const list = new ListTemplate(ul);
 let noOfItems = 0;
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let values = [toFrom.value, details.value, amount.valueAsNumber];
+    let values = [
+        toFrom.value,
+        details.value,
+        amount.valueAsNumber,
+    ];
     let doc;
     if (type.value) {
         doc = new Invoice(...values);

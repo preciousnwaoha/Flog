@@ -6,6 +6,6 @@ export class Invoice {
         this.amount = amount;
     }
     format() {
-        return `${this.client} owes $${this.amount} for ${this.details}`;
+        return `${this.client} owes <span class='green-amount amount-in-item'>$${this.amount}</span> for ${this.details}`;
     }
 }

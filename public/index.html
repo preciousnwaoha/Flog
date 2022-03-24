@@ -16,7 +16,17 @@
   <body>
     <header>
       <h1>Finance Logger</h1>
-      <div class="theme"><i class="fa-solid fa-palette"  ></i></div>
+      <div class="cash-theme-container">
+        <div class="cash">
+          <div class="cash cash-in">$0.00</div>
+          <div class="cash cash-out">$0.00</div>
+          <div class="cash cash-equal-to">=</div>
+          <div class="cash cash-total">$0.00</div>
+        </div>
+        <div class="theme"><i class="fa-solid fa-palette"  ></i></div>
+      
+      </div>
+      
     </header>
 
     <!-- effect wrap start -->
@@ -75,9 +85,13 @@
       <div class="wrapper">
         <!-- output list -->
         <div class="ul-holder">
+          <div class="ul-gap ul-gap-up"></div>
+          <div class="ul-gap ul-gap-down"></div>
           <ul class="item-list"></ul>
+          
           <div class="no-of-items">No Item</div>
         </div>
+        
       </div>
 
       <div class="form-container">
@@ -91,15 +105,15 @@
           </div>
           <div class="field">
             <label>To / From:</label>
-            <input type="text" id="tofrom" />
+            <input type="text" id="tofrom" required/>
           </div>
           <div class="field">
             <label>Details:</label>
-            <input type="text" id="details" />
+            <input type="text" id="details" required/>
           </div>
           <div class="field">
             <label>Amount (£):</label>
-            <input type="number" id="amount" min="0" />
+            <input type="number" step=".01" id="amount" min="0" required/>
           </div>
           <button>Add Item</button>
         </form>

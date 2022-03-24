@@ -212,3 +212,10 @@
 // console.log(docOne)
 // console.log(docTwo)
 
+function computeClosestToZero(ts: number[]): number[] {
+    ts.sort()
+
+    return ts
+}
+
+console.log(computeClosestToZero([9,5,6,4,3,8,2,5, 2]))

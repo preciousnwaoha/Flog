@@ -40,7 +40,13 @@ export class ListTemplate {
         li.addEventListener("click", (e) => {
             let elem = e.currentTarget;
             let parent = elem.parentNode;
-            storage.removeItem(elem, elem.id[0]);
+            let listOfItems = parent.childNodes;
+            let itemsTypes = [];
+            for (const i in listOfItems) {
+                itemsTypes.push(listOfItems[i].id);
+            }
+            itemsTypes = itemsTypes.filter(e => e !== undefined);
+            storage.removeItem(elem, elem.id[0], itemsTypes);
             parent.removeChild(elem);
         });
     }

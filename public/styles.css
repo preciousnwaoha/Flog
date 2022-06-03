@@ -1,17 +1,24 @@
 :root {
-  --primary: #f3f3f3;
+  --primary: #fdfdfd;
   --primary-two: #0e0f18;
   --secondary: #229774;
   --secondary-two: red;
+  --text-color: #0e0f18;
+  --text-color-two: #fdfdfd;
+  --ul-bg-color: #0e0f18;
   --white: #f4f5f5;
   --glass: rgba(0, 0, 0, 0.05);
-  --soft-dark: #bbbbbb;
+  --soft-dark: #ebebeb;
 }
 
 body {
   margin: 0;
   font-family: "Fredoka", sans-serif;
   background: var(--primary);
+}
+
+nav {
+  position: relative;
 }
 
 header {
@@ -27,8 +34,13 @@ header {
 
 h1 {
   display: inline-block;
+  font-family: cursive;
   color: var(--secondary);
   cursor: pointer;
+}
+
+h1:hover {
+  color: #00d091;
 }
 
 .theme {
@@ -42,11 +54,17 @@ h1 {
 }
 
 .theme .fa-palette {
-  color: var(--primary-two);
+  color: var(--text-color-two);
   font-size: 30px;
 }
 .theme .fa-palette:hover {
   color: var(--secondary);
+}
+
+.currency-pick {
+  color: #f9f9f9;
+  padding: 12px 24px;
+
 }
 
 .cash-theme-container {
@@ -60,7 +78,7 @@ h1 {
 }
 
 .cash {
-  color: var(--primary-two);
+  color: var(--text-color);
   font-size: 24px;
   font-weight: bold;
 }
@@ -84,6 +102,9 @@ h1 {
     position: static;
     margin-left: 50px;
   }
+
+
+
   .cash-theme-container {
     width: auto;
     display: flex;
@@ -92,14 +113,96 @@ h1 {
     margin-bottom: 0px;
   }
 
-  .cash-out {
+  .cash-out, .cash-in, .cash-equal-to, .cash-total {
     margin-left: 20px;
     font-size: 32px;
   }
-  .cash-in {
-    margin-right: 20px;
-    font-size: 32px;
+}
+
+
+.about-sec {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: calc(-100%);
+  background: var(--primary);
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  z-index: 100;
+}
+
+.slide-in-about {
+  animation: slideInAbout 0.3s ease-in forwards;
+}
+
+@keyframes slideInAbout {
+  0% {
+    left: calc(-50%);
   }
+  100% {
+    left: 0%;
+  }
+}
+
+.exit-about {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  font-size: 30px;
+  color: var(--text-color);
+  transform: rotate(45deg);
+  width: 30px;
+  height: 30px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.exit-about:hover {
+  color: var(--secondary);
+  font-weight: bold;
+  animation: rotate 0.3s forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  } 
+}
+
+.about-content  {
+  width: 80%;
+  height: 60vh;
+  margin: auto;
+  text-align: center;
+}
+.about-logo {
+  font-size: 32px;
+  cursor: default;
+}
+
+.about-logo:hover {
+  color: var(--secondary);
+}
+.about-logo span {
+  color: var(--text-color);
+  font-family: "Fredoka", sans-serif;
+}
+.about-logo span:hover {
+  color: var(--text-color);
+}
+
+.about {
+  font-size: 14px;
+  color: #999;
+  line-height: 30px;
 }
 
 .effect-wrap .effect {
@@ -112,12 +215,14 @@ h1 {
   height: 60px;
   border: 8px solid #9527e4;
   right: 30%;
-  bottom: 10%;
+  bottom: calc(-20%);
   animation: spin 10s linear infinite;
 }
+
+
 .effect-2 {
   left: 3%;
-  bottom: 20%;
+  bottom: calc(-15%);
   width: 40px;
   display: flex;
   flex-wrap: wrap;
@@ -130,6 +235,8 @@ h1 {
   background: #b3a20a;
   margin: 0 3px 12px;
 }
+
+
 
 .effect-3 {
   height: 180px;
@@ -144,8 +251,8 @@ h1 {
 .effect-4 {
   border-top: 60px solid transparent;
   border-left: 60px solid #d70661;
-  left: 30%;
-  top: 30%;
+  left: 60%;
+  top: 60%;
   animation: spin 15s linear infinite;
 }
 
@@ -157,6 +264,27 @@ h1 {
   opacity: 0.5;
   left: -70px;
   top: -50px;
+}
+
+@media screen and (min-width: 760px){
+  .effect-1 {
+    right: 30%;
+    bottom: 10%;
+  }
+  .effect-2 {
+    left: 3%;
+    bottom: 20%;
+  }
+
+  .effect-4 {
+    left: 30%;
+    top: 30%;
+  }
+  
+  .effect-4::before {
+    left: -70px;
+    top: -50px;
+  }
 }
 
 .effect-5 {
@@ -232,6 +360,7 @@ h1 {
   width: 90%;
   padding: 20px 0;
   margin: auto;
+  border-radius: 10px;
 }
 
 ul {
@@ -239,7 +368,7 @@ ul {
   height: calc(100% -50px);
   max-height: 400px;
   padding: 0px 25px;
-  background: var(--primary-two);
+  background: var(--ul-bg-color);
   list-style-type: none;
   margin: 0;
   border-radius: 0px;
@@ -275,7 +404,7 @@ ul::-webkit-scrollbar-thumb {
 .ul-gap {
   position: absolute;
   left: 0;
-  background: var(--primary-two);
+  background: var(--ul-bg-color);
   width: 100%;
   height: 20px;
   z-index: 50;
@@ -305,7 +434,7 @@ li {
 
 .li-hide-del-curve {
   position: absolute;
-  background: var(--primary-two);
+  background: var(--ul-bg-color);
   width: 30px;
   height: calc(100%);
   left: -33px;
@@ -345,11 +474,11 @@ li:hover .li-del-curve {
   border-radius: 50%;
 }
 .li-del-curve .blind-circle {
-  background: var(--primary-two);
+  background: var(--ul-bg-color);
 }
 .li-del-curve .seen-circle {
   background: var(--primary);
-  padding-bottom: 6px;
+  padding: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -384,13 +513,13 @@ li:hover .li-text-div {
 }
 
 .li-text-div h4 {
-  color: var(--primary);
+  color: var(--text-color-two);
   margin: 0;
   text-transform: capitalize;
 }
 
 .li-text-div p {
-  color: var(--primary);
+  color: var(--text-color-two);
   margin: 8px 0 0;
 }
 .green-amount {
@@ -435,15 +564,15 @@ label {
   display: block;
   font-weight: bold;
   font-size: 0.8em;
-  color: var(--primary-two);
+  color: var(--text-color);
   margin: 16px 0 6px;
 }
 input,
 select {
   background: var(--primary-two);
-  color: var(--primary);
+  color: var(--text-color-two);
   padding: 8px 12px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid var(--primary);
   border-radius: 8px;
   outline: none;
   cursor: pointer;

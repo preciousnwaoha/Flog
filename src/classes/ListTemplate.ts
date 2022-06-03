@@ -53,9 +53,17 @@ export class ListTemplate {
     li.addEventListener("click", (e: Event) => {
 
       let elem = e.currentTarget as HTMLLIElement;
-
       let parent = elem.parentNode as HTMLUListElement;
-      storage.removeItem(elem, elem.id[0])
+      let listOfItems: any = parent.childNodes
+      let itemsTypes: string[] = []
+
+      for (const i in listOfItems) {
+        itemsTypes.push(listOfItems[i].id)
+        
+      }
+      itemsTypes = itemsTypes.filter(e => e !== undefined)
+
+      storage.removeItem(elem, elem.id[0], itemsTypes)
       parent.removeChild(elem)
     })
   }

@@ -14,8 +14,16 @@
     
   </head>
   <body>
+    <nav>
     <header>
-      <h1>Finance Logger</h1>
+      <h1 title="Financial Logger" class="main-logo">fLog</h1>
+      <!-- <select class="currency-pick" id="currency">
+        <option value="$">$</option>
+        <option value="N">N</option>
+        <option value="E">E</option>
+        <option value="Y">Y</option>
+        <option value="R">R</option>
+      </select> -->
       <div class="cash-theme-container">
         <div class="cash">
           <div class="cash cash-in">$0.00</div>
@@ -28,6 +36,17 @@
       </div>
       
     </header>
+    <section class="about-sec">
+      <div class="exit-about">&times;</div>
+      <div class="about-content">
+        <h1 class="about-logo"><span>About </span>fLog</h1>
+        <p class="about">Wanna have an simple way to keep track of your day to day cash flow, fLog is your new easy to use Finance Log tool that can help you note down your cash ins and outs, who you owe, what cash is comming, for what job and how much exactly. Hint: if your eye hurts double tap the paint icon.</p>
+      </div>
+      
+    </section>
+  </nav>
+
+
 
     <!-- effect wrap start -->
     <div class="effect-wrap">
@@ -105,22 +124,22 @@
           </div>
           <div class="field">
             <label>To / From:</label>
-            <input type="text" id="tofrom" required/>
+            <input type="text" id="tofrom" placeholder="Dave" required/>
           </div>
           <div class="field">
             <label>Details:</label>
-            <input type="text" id="details" required/>
+            <input type="text" id="details" placeholder="Plumbing Work" required/>
           </div>
           <div class="field">
-            <label>Amount (£):</label>
-            <input type="number" step=".01" id="amount" min="0" required/>
+            <label>Amount ($):</label>
+            <input type="number" step=".01" id="amount" min="0" placeholder="0.00" required/>
           </div>
           <button>Add Item</button>
         </form>
       </div>
     </div>
     <footer>
-      <a href="https://www.thenetninja.co.uk">Precios Nwaoha</a>
+      <a href="https://www.thenetninja.co.uk">&copy; Precios Nwaoha</a>
     </footer>
 
     <script type="module" src="./app.js"></script>

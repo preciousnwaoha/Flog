@@ -11,29 +11,39 @@
     />
     <script src="https://kit.fontawesome.com/c23477c490.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css" />
-    
+    <link rel="stylesheet" href="effects.css" />
   </head>
   <body>
-    <nav>
+    
     <header>
-      <h1 title="Financial Logger" class="main-logo">fLog</h1>
-      <!-- <select class="currency-pick" id="currency">
-        <option value="$">$</option>
-        <option value="N">N</option>
-        <option value="E">E</option>
-        <option value="Y">Y</option>
-        <option value="R">R</option>
-      </select> -->
-      <div class="cash-theme-container">
-        <div class="cash">
-          <div class="cash cash-in">$0.00</div>
-          <div class="cash cash-out">$0.00</div>
-          <div class="cash cash-equal-to">=</div>
-          <div class="cash cash-total">$0.00</div>
-        </div>
-        <div class="theme"><i class="fa-solid fa-palette"  ></i></div>
       
-      </div>
+        <div title="Financial Logger" class="main-logo">fLog</div>
+        <nav  >
+          <div class="select-wrapper">
+            <select class="currency-pick" id="currency">
+              <option value="$"><span>Dollar</span> $</option>
+              <option value="N"><span>Naira</span> N</option>
+              <option value="E"><span>Euro</span> E</option>
+              <option value="Y"><span>Yenn</span> Y</option>
+            </select>
+          </div>
+          
+            <div class="cash cash-bg">
+              <span class="cash-in">$0.00</span>
+              <span class="cash-out">$0.00</span>
+              <span class="cash-equal-to">=</span>
+              <span class="cash-total">$0.00</span>
+            </div>
+            
+          <div class="theme"><i class="fa-solid fa-palette"  ></i></div>
+          
+        </nav>
+        <div class="cash cash-sm">
+          <div class="cash-in">$0.00</div>
+          <div class="cash-out">$0.00</div>
+          <div class="cash-equal-to">=</div>
+          <div class="cash-total">$0.00</div>
+        </div>
       
     </header>
     <section class="about-sec">
@@ -44,7 +54,7 @@
       </div>
       
     </section>
-  </nav>
+  
 
 
 
@@ -100,46 +110,53 @@
     </div>
     <!-- effect wrap end -->
 
-    <div class="split-container">
-      <div class="wrapper">
-        <!-- output list -->
-        <div class="ul-holder">
-          <div class="ul-gap ul-gap-up"></div>
-          <div class="ul-gap ul-gap-down"></div>
-          <ul class="item-list"></ul>
-          
-          <div class="no-of-items">No Item</div>
-        </div>
-        
-      </div>
+    <main>
+      <div class="split-container">
 
-      <div class="form-container">
-        <form class="new-item-form glass-div">
-          <div class="field">
-            <label>Type:</label>
-            <select id="type">
-              <option value="invoice">Invoice</option>
-              <option value="payment">Payment</option>
-            </select>
+  
+        <div class="form-container">
+          <form class="new-item-form glass-div">
+            <div class="field">
+              <label>Type:</label>
+              <select id="type">
+                <option value="invoice">Invoice</option>
+                <option value="payment">Payment</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>To / From:</label>
+              <input type="text" id="tofrom" placeholder="Dave" required/>
+            </div>
+            <div class="field">
+              <label>Details:</label>
+              <input type="text" id="details" placeholder="Plumbing Work" required/>
+            </div>
+            <div class="field">
+              <label>Amount ($):</label>
+              <input type="number" step=".01" id="amount" min="0" placeholder="0.00" required/>
+            </div>
+            <button>Add Item</button>
+          </form>
+        </div>
+
+
+        <div class="wrapper">
+          <!-- output list -->
+          <div class="ul-holder">
+            <div class="ul-gap ul-gap-up"></div>
+            <div class="ul-gap ul-gap-down"></div>
+            <ul class="item-list"></ul>
+            
+            <div class="no-of-items">No Item</div>
           </div>
-          <div class="field">
-            <label>To / From:</label>
-            <input type="text" id="tofrom" placeholder="Dave" required/>
-          </div>
-          <div class="field">
-            <label>Details:</label>
-            <input type="text" id="details" placeholder="Plumbing Work" required/>
-          </div>
-          <div class="field">
-            <label>Amount ($):</label>
-            <input type="number" step=".01" id="amount" min="0" placeholder="0.00" required/>
-          </div>
-          <button>Add Item</button>
-        </form>
+          
+        </div>
       </div>
-    </div>
+    </main>
+
+    
     <footer>
-      <a href="https://www.thenetninja.co.uk">&copy; Precios Nwaoha</a>
+      <a href="https://github.com/preciousnwaoha">&copy; Precios Nwaoha</a>
     </footer>
 
     <script type="module" src="./app.js"></script>

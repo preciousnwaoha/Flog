@@ -20,13 +20,12 @@ interface Data {
     cashIn: number[];
     cashOut: number[];
   };
-  cashValue: string;
+  currency: string;
 }
 
 export class Storage {
   constructor(
     private listItems: HTMLLIElement[],
-
     private ids: {
       invoiceId: number;
       paymentId: number;
@@ -35,7 +34,7 @@ export class Storage {
       cashIn: number[];
       cashOut: number[];
     },
-    private cashValue: string
+    private currency: string
   ) {}
 
   getItems() {
@@ -65,7 +64,9 @@ export class Storage {
           (c, index) => index !== cashIndex
         );
         console.log(this.cash.cashIn, cashIndex);
-        cashIn.innerText = `$${this.getCash("in")}`;
+        cashIn.forEach(x => {
+          x.textContent = `${this.currency}${this.getCash("in")}`;
+        })
         this.removeFromLocalStorage(idx, id);
       }
       if (id === "p") {
@@ -83,14 +84,18 @@ export class Storage {
           (c, index) => index !== cashIndex
         );
         console.log(this.cash.cashOut, cashIndex);
-        cashOut.innerText = `$${this.getCash("out")}`;
+        cashOut.forEach(x => {
+          x.textContent = `${this.currency}${this.getCash("out")}`;
+        })
         this.removeFromLocalStorage(idx, id);
       }
-      cashTotal.innerHTML = `${
-        this.getCash("total") < 0
-          ? "-$" + this.getCash("total") * -1
-          : "$" + this.getCash("total")
-      }`;
+      cashTotal.forEach(x => {
+        x.innerHTML = `${
+          this.getCash("total") < 0
+            ? "-" + this.currency + this.getCash("total") * -1
+            : this.currency + this.getCash("total")
+        }`;
+      })
       let noOfItems = this.getItems().length;
       noOfItemsElement.innerText = `${noOfItems} Item${
         noOfItems > 1 ? "s" : ""
@@ -149,8 +154,11 @@ export class Storage {
     }
   }
 
-  setCashValue (value: string) {
-    this.cashValue = value
+  getCurrency() {
+    return this.currency
+  }
+  setCurrency (value: string) {
+    this.currency = value
   }
 
   setInitialDataInLocalStorage() {
@@ -164,7 +172,7 @@ export class Storage {
         cashIn: [],
         cashOut: [],
       },
-      cashValue: "$",
+      currency: "$",
     };
     localStorage.setItem("fin-log-data", JSON.stringify(data));
   }
@@ -181,7 +189,7 @@ export class Storage {
     data.itemsData.push(itemData);
     data.ids = this.ids;
     data.cash = this.cash;
-    data.cashValue = this.cashValue;
+    data.currency = this.currency;
     localStorage.setItem("fin-log-data", JSON.stringify(data));
   }
 
@@ -190,14 +198,20 @@ export class Storage {
     const data: Data = JSON.parse(dataInJSON);
     this.ids = data.ids;
     this.cash = data.cash;
-    this.cashValue = data.cashValue;
-    cashOut.innerText = `$${this.getCash("out")}`;
-    cashIn.innerText = `$${this.getCash("in")}`;
-    cashTotal.innerHTML = `${
-      this.getCash("total") < 0
-        ? "-$" + this.getCash("total") * -1
-        : "$" + this.getCash("total")
-    }`;
+    this.currency = data.currency;
+    cashOut.forEach(x => {
+      x.textContent = `${this.currency}${this.getCash("out")}`;
+    })
+    cashIn.forEach(x => {
+      x.textContent = `${this.currency}${this.getCash("in")}`;
+    })
+    cashTotal.forEach(x => {
+      x.innerHTML = `${
+        this.getCash("total") < 0
+          ? "-" + this.currency + this.getCash("total") * -1
+          : this.currency + this.getCash("total")
+      }`;
+    } )
     let itemsData: ItemData[] = data.itemsData;
     return itemsData;
   }
@@ -219,3 +233,4 @@ export class Storage {
     localStorage.setItem("fin-log-data", JSON.stringify(data));
   }
 }
+

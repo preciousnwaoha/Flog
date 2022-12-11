@@ -1,0 +1,137 @@
+
+.effect-wrap .effect {
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .effect-1 {
+    width: 60px;
+    height: 60px;
+    border: 8px solid #9527e4;
+    right: 30%;
+    bottom: calc(-20%);
+    animation: spin 10s linear infinite;
+  }
+  
+  
+  .effect-2 {
+    left: 3%;
+    bottom: calc(-15%);
+    width: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    animation: topBounce 3s ease-in-out infinite;
+  }
+  .effect-2 div {
+    height: 4px;
+    width: 4px;
+    background: #b3a20a;
+    margin: 0 3px 12px;
+  }
+  
+  
+  
+  .effect-3 {
+    height: 180px;
+    width: 180px;
+    border: 25px solid var(--skin-color);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: -120px;
+    animation: leftBounce 3s ease-in-out infinite;
+  }
+  .effect-4 {
+    border-top: 60px solid transparent;
+    border-left: 60px solid #d70661;
+    left: 60%;
+    top: 60%;
+    animation: spin 15s linear infinite;
+  }
+  
+  .effect-4::before {
+    content: "";
+    border-top: 60px solid transparent;
+    border-left: 60px solid #d70661;
+    position: absolute;
+    opacity: 0.5;
+    left: -70px;
+    top: -50px;
+  }
+  
+  @media screen and (min-width: 760px){
+  
+    .effect-1 {
+      right: 30%;
+      bottom: 10%;
+    }
+    .effect-2 {
+      left: 3%;
+      bottom: 20%;
+    }
+  
+    .effect-4 {
+      left: 30%;
+      top: 30%;
+    }
+    
+    .effect-4::before {
+      left: -70px;
+      top: -50px;
+    }
+  }
+  
+  .effect-5 {
+    height: 100px;
+    width: 100px;
+    right: 5%;
+    top: 20%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: spin 10s linear infinite;
+  }
+  
+  .effect-5 div {
+    width: 2px;
+    background: #4dd0e1;
+    height: 100%;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes topBounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(25px);
+    }
+  }
+  @keyframes leftBounce {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(25px);
+    }
+  }
+  @keyframes fadeInTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-25px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }

@@ -3,11 +3,11 @@ import { cashOut } from "../app.js";
 import { cashTotal } from "../app.js";
 import { noOfItemsElement } from "../app.js";
 export class Storage {
-    constructor(listItems, ids, cash, cashValue) {
+    constructor(listItems, ids, cash, currency) {
         this.listItems = listItems;
         this.ids = ids;
         this.cash = cash;
-        this.cashValue = cashValue;
+        this.currency = currency;
     }
     getItems() {
         return this.listItems;
@@ -30,7 +30,9 @@ export class Storage {
                 }
                 this.cash.cashIn = this.cash.cashIn.filter((c, index) => index !== cashIndex);
                 console.log(this.cash.cashIn, cashIndex);
-                cashIn.innerText = `$${this.getCash("in")}`;
+                cashIn.forEach(x => {
+                    x.textContent = `${this.currency}${this.getCash("in")}`;
+                });
                 this.removeFromLocalStorage(idx, id);
             }
             if (id === "p") {
@@ -44,12 +46,16 @@ export class Storage {
                 }
                 this.cash.cashOut = this.cash.cashOut.filter((c, index) => index !== cashIndex);
                 console.log(this.cash.cashOut, cashIndex);
-                cashOut.innerText = `$${this.getCash("out")}`;
+                cashOut.forEach(x => {
+                    x.textContent = `${this.currency}${this.getCash("out")}`;
+                });
                 this.removeFromLocalStorage(idx, id);
             }
-            cashTotal.innerHTML = `${this.getCash("total") < 0
-                ? "-$" + this.getCash("total") * -1
-                : "$" + this.getCash("total")}`;
+            cashTotal.forEach(x => {
+                x.innerHTML = `${this.getCash("total") < 0
+                    ? "-" + this.currency + this.getCash("total") * -1
+                    : this.currency + this.getCash("total")}`;
+            });
             let noOfItems = this.getItems().length;
             noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;
         }
@@ -94,8 +100,11 @@ export class Storage {
             return this.ids.paymentId;
         }
     }
-    setCashValue(value) {
-        this.cashValue = value;
+    getCurrency() {
+        return this.currency;
+    }
+    setCurrency(value) {
+        this.currency = value;
     }
     setInitialDataInLocalStorage() {
         const data = {
@@ -108,7 +117,7 @@ export class Storage {
                 cashIn: [],
                 cashOut: [],
             },
-            cashValue: "$",
+            currency: "$",
         };
         localStorage.setItem("fin-log-data", JSON.stringify(data));
     }
@@ -124,7 +133,7 @@ export class Storage {
         data.itemsData.push(itemData);
         data.ids = this.ids;
         data.cash = this.cash;
-        data.cashValue = this.cashValue;
+        data.currency = this.currency;
         localStorage.setItem("fin-log-data", JSON.stringify(data));
     }
     getFromLocalStorage() {
@@ -132,12 +141,18 @@ export class Storage {
         const data = JSON.parse(dataInJSON);
         this.ids = data.ids;
         this.cash = data.cash;
-        this.cashValue = data.cashValue;
-        cashOut.innerText = `$${this.getCash("out")}`;
-        cashIn.innerText = `$${this.getCash("in")}`;
-        cashTotal.innerHTML = `${this.getCash("total") < 0
-            ? "-$" + this.getCash("total") * -1
-            : "$" + this.getCash("total")}`;
+        this.currency = data.currency;
+        cashOut.forEach(x => {
+            x.textContent = `${this.currency}${this.getCash("out")}`;
+        });
+        cashIn.forEach(x => {
+            x.textContent = `${this.currency}${this.getCash("in")}`;
+        });
+        cashTotal.forEach(x => {
+            x.innerHTML = `${this.getCash("total") < 0
+                ? "-" + this.currency + this.getCash("total") * -1
+                : this.currency + this.getCash("total")}`;
+        });
         let itemsData = data.itemsData;
         return itemsData;
     }

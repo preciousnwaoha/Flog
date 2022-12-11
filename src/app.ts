@@ -4,6 +4,7 @@ import { Invoice } from "./classes/Invoice.js";
 import { HasFormatter } from "./interfaces/HasFormatter.js";
 import { ListTemplate } from "./classes/ListTemplate.js";
 import { changeTheme } from "./classes/Theme.js";
+import { convertToCurrency } from "./libs/utils/item.js";
 
 type ListOfItems = HTMLLIElement[];
 
@@ -17,16 +18,16 @@ const logo = document.querySelector(".main-logo") as HTMLHeadingElement;
 const about = document.querySelector(".about-sec") as HTMLDivElement;
 const aboutExit = document.querySelector(".exit-about") as HTMLDivElement;
 
-const currency = document.querySelector("#currency") as HTMLSelectElement;
+const currencyPicker = document.querySelector("#currency") as HTMLSelectElement;
 
 
 
 
-export const cashIn = document.querySelector(".cash-in") as HTMLDivElement;
-export const cashOut = document.querySelector(".cash-out") as HTMLDivElement;
-export const cashTotal = document.querySelector(
+export const cashIn = document.querySelectorAll(".cash-in");
+export const cashOut = document.querySelectorAll(".cash-out");
+export const cashTotal = document.querySelectorAll(
   ".cash-total"
-) as HTMLDivElement;
+);
 
 export const noOfItemsElement = document.querySelector(
   ".no-of-items"
@@ -59,6 +60,7 @@ const storage = new Storage(
 );
 
 logo.addEventListener("click", () => {
+  console.log("Clicke3d")
   if (about.classList.length > 1 ) {
     about.className = "about-sec"
   } else {
@@ -74,20 +76,26 @@ aboutExit.addEventListener("click", () => {
   }
 })
 
-
-currency.addEventListener("click", () => {
+console.log(storage.getCurrency())
+currencyPicker.addEventListener("click", () => {
   const itemsOnScreen = document.querySelectorAll(".amount-in-item")
-  for (const i in itemsOnScreen) {
-    let tempText = itemsOnScreen[i].innerHTML
-    tempText = tempText.replace(/[$NEYR]/, currency.value)
-    itemsOnScreen[i].innerHTML = `${tempText}`
+  for (const item of itemsOnScreen) {
+    item.innerHTML = convertToCurrency(currencyPicker.value, item.innerHTML, storage.getCurrency())
+    console.log(currencyPicker.value, item.innerHTML)
   }
-  // let tempCashIn = cashIn.innerHTML.replace(/[$NEYR]/, currency.value);
-  // cashIn.innerHTML = `${tempCashIn}`
-  // cashOut.innerHTML = cashOut.innerHTML.replace(/[$NEYR]/, currency.value)
-  // cashTotal.innerHTML = cashTotal.innerHTML.replace(/[$NEYR]/, currency.value)
-  storage.setCashValue(currency.value)
+  cashIn.forEach(x => {
+    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
+  })
+  cashOut.forEach(x => {
+    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
+  })
+  cashTotal.forEach(x => {
+    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
+  })
+  storage.setCurrency(currencyPicker.value)
 })
+
+
 
 if (localStorage.getItem("fin-log-data")) {
   const itemsData = storage.getFromLocalStorage();
@@ -133,15 +141,22 @@ form.addEventListener("submit", (e: Event) => {
     doc = new Invoice(...values);
     storage.addId("invoice");
     storage.addCash("invoice", values[2]);
-    cashIn.innerText = `$${storage.getCash("in")}`;
+    cashIn.forEach(x => {
+      console.log(x)
+      x.textContent= `${storage.getCurrency()}${storage.getCash("in")}`;
+    })
   } else {
     doc = new Payment(...values);
     storage.addId("payment");
     storage.addCash("payment", values[2]);
-    cashOut.innerText = `$${storage.getCash("out")}`;
+    cashOut.forEach(x => {
+      x.textContent = `${storage.getCurrency()}${storage.getCash("out")}`;
+    })
   }
 
-  cashTotal.innerHTML = `${storage.getCash("total") < 0 ? "-$" + (storage.getCash("total")*-1) : "$" + storage.getCash("total")}`;
+  cashTotal.forEach(x => {
+    x.innerHTML = `${storage.getCash("total") < 0 ? "-$" + (storage.getCash("total")*-1) : "$" + storage.getCash("total")}`;
+  })
   list.render(doc, type.value, "end", storage);
   let noOfItems = storage.getItems().length;
   noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;

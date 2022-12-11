@@ -50,9 +50,9 @@ export class ListTemplate {
     storage.addItem(li)
 
 
-    li.addEventListener("click", (e: Event) => {
+    delDiv.addEventListener("click", () => {
 
-      let elem = e.currentTarget as HTMLLIElement;
+      let elem = li as HTMLLIElement;
       let parent = elem.parentNode as HTMLUListElement;
       let listOfItems: any = parent.childNodes
       let itemsTypes: string[] = []

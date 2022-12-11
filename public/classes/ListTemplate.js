@@ -37,8 +37,8 @@ export class ListTemplate {
             this.container.append(li);
         }
         storage.addItem(li);
-        li.addEventListener("click", (e) => {
-            let elem = e.currentTarget;
+        delDiv.addEventListener("click", () => {
+            let elem = li;
             let parent = elem.parentNode;
             let listOfItems = parent.childNodes;
             let itemsTypes = [];

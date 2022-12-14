@@ -1,3 +1,4 @@
+
 import { Storage } from "./classes/Storage.js";
 import { Payment } from "./classes/Payment.js";
 import { Invoice } from "./classes/Invoice.js";
@@ -150,14 +151,14 @@ if (localStorage.getItem("fin-log-data")) {
 }
 
 
-currencyPicker.addEventListener("change", (e) => {
-  console.log("red", e.target.value); // 👉️ get selected VALUE
-  if (e.target.value === storage.getCurrency()) {
+currencyPicker.addEventListener("change", (event) => {
+  console.log("red", (event.target as HTMLInputElement).value); // 👉️ get selected VALUE
+  if ((event.target as HTMLInputElement).value === storage.getCurrency()) {
     return;
   }
 
   let newCurrencyData = currencies.filter(
-    (_currency) => _currency.code === e.target.value
+    (_currency) => _currency.code === (event.target as HTMLInputElement).value
   )[0];
 
   storage.convertCashToCurrency(newCurrencyData);

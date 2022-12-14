@@ -2,6 +2,7 @@
 .effect-wrap .effect {
     position: absolute;
     z-index: -1;
+    display: none;
   }
   
   .effect-1 {

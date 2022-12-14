@@ -1,3 +1,4 @@
+import { updateCashWapper } from "../app.js";
 export class ListTemplate {
     constructor(container) {
         this.container = container;
@@ -47,7 +48,12 @@ export class ListTemplate {
             }
             itemsTypes = itemsTypes.filter(e => e !== undefined);
             storage.removeItem(elem, elem.id[0], itemsTypes);
+            updateCashWapper();
             parent.removeChild(elem);
         });
+    }
+    empty(storage) {
+        this.container.innerHTML = "",
+            storage.emptyItems();
     }
 }

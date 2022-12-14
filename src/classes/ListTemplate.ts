@@ -1,3 +1,4 @@
+import { updateCashWapper } from "../app.js";
 import { HasFormatter } from "../interfaces/HasFormatter.js";
 import { Storage } from "./Storage.js"
 
@@ -64,7 +65,13 @@ export class ListTemplate {
       itemsTypes = itemsTypes.filter(e => e !== undefined)
 
       storage.removeItem(elem, elem.id[0], itemsTypes)
+      updateCashWapper()
       parent.removeChild(elem)
     })
+  }
+
+  empty (storage: Storage) {
+    this.container.innerHTML = "",
+    storage.emptyItems()
   }
 }

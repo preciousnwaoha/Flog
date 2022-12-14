@@ -5,7 +5,8 @@
   --secondary-two: red;
   --text-dark: #0e0f18;
   --text-light: #ffffff;
-  --ul-bg-color: #0e0f18;
+  --ul-bg-color: #1c1c21;
+  --theme-color: #0e0f18,
   --white: #f4f5f5;
   --glass: rgba(0, 0, 0, 0.05);
   --soft-dark: #ebebeb;
@@ -28,6 +29,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
   font-family: "Fredoka", sans-serif;
   background: var(--primary);
 }
@@ -73,12 +75,11 @@ nav {
   padding: 0 0.75rem;
   border-radius: 8px;
   /* background: var(--primary-two); */
-  background: transparent;
+  /* background: transparent; */
 }
 
 
 .currency-pick {
-  /* color: var(--text-light); */
   background: transparent;
   color: var(--text-dark);
   font-size: 1rem;
@@ -89,23 +90,25 @@ nav {
   padding-right: 0.5rem;
 }
 
+.currency-pick >* {
+  color: black;
+}
+
 
 
 .theme {
   display: inline-block;
-  width: 30px;
-  height: 30px;
   cursor: pointer;
   margin-left: 1rem;
-  background: var(--primary-two);
+  /* background: var(--primary-two); */
   border-radius: 50%;
-  border: 1px solid var(--text-dark);
+  /* border: 1px solid var(--soft-dark); */
 }
 
 
 .theme .fa-palette {
-  color: var(--text-light);
-  font-size: 30px;
+  color: var(--theme-color);
+  font-size: 1.25rem;
 }
 .theme .fa-palette:hover {
   color: var(--secondary);
@@ -118,7 +121,7 @@ nav {
   justify-content: space-between;
   width: 100%;
   color: var(--text-dark);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -322,7 +325,7 @@ li {
   border-style: solid;
   border-color: transparent;
   /* border-left: 3px solid var(--primary); */
-  cursor: pointer;
+  
   
 }
 
@@ -376,9 +379,11 @@ li:hover .li-del-curve {
   padding: 0px;
   display: flex;
   align-items: center;
+  text-align: center;
   justify-content: center;
   line-height: 30px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 .li-del-curve:hover .seen-circle {
@@ -460,6 +465,8 @@ form {
 .glass-div {
   background-color: var(--glass);
   backdrop-filter: blur(8px);
+  background: var(--primary);
+  border: 1px solid var(--soft-dark);
 }
 
 .field {
@@ -468,24 +475,40 @@ form {
 
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 0.8em;
   color: var(--text-dark);
   margin: 16px 0 6px;
 }
 input,
-select {
-  background: var(--primary-two);
-  color: var(--text-light);
+#type {
+  background: transparent;
+  color: var(--text-dark);
   padding: 8px 12px;
   border: 1px solid var(--primary);
   border-radius: 8px;
   outline: none;
   cursor: pointer;
+  outline: 1px solid var(--soft-dark);
+}
+
+#type >* {
+  color: black;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-text-fill-color: var(--text-dark) !important;
+    /* border: 1px solid var(--black) !important; */
+    /* -webkit-box-shadow: 0 0 0 30px var(--white) inset !important; */
+    -webkit-background-clip: text;
 }
 
 input {
   width: 100%;
+  cursor: text;
 }
 input:hover input:focus {
   outline: none;
@@ -512,7 +535,9 @@ button:focus {
   color: var(--secondary);
   border: 1px solid var(--secondary)
 }
-
+footer {
+  padding-top: 1rem;
+}
 footer a {
   text-align: center;
   display: block;
@@ -543,7 +568,6 @@ footer a {
     justify-content: center;
   }
 
-
   .cash-sm {
     display: none;
   }
@@ -553,7 +577,7 @@ footer a {
   }
   .cash-out, .cash-in, .cash-equal-to, .cash-total {
     margin-left: 20px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .cash-in {
@@ -562,6 +586,9 @@ footer a {
 
   .theme {
     margin-left: 1.5rem;
+  }
+  .theme .fa-palette {
+    font-size: 1.5rem;
   }
 
   .split-container {

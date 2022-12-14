@@ -3,31 +3,30 @@ import { Payment } from "./classes/Payment.js";
 import { Invoice } from "./classes/Invoice.js";
 import { HasFormatter } from "./interfaces/HasFormatter.js";
 import { ListTemplate } from "./classes/ListTemplate.js";
-import { changeTheme } from "./classes/Theme.js";
-import { convertToCurrency } from "./libs/utils/item.js";
+import { formatCurrencyAmount } from "./libs/utils/currency-helpers.js";
 
-type ListOfItems = HTMLLIElement[];
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "a1fbba2694mshc64927b9a391e36p1ada09jsnea91e9f526ca",
+    "X-RapidAPI-Host": "fixer-fixer-currency-v1.p.rapidapi.com",
+  },
+};
 
-// Theme
-const theme = document.querySelector(".theme") as HTMLDivElement;
 
-theme.addEventListener("click", changeTheme);
 
 // About logic
 const logo = document.querySelector(".main-logo") as HTMLHeadingElement;
 const about = document.querySelector(".about-sec") as HTMLDivElement;
 const aboutExit = document.querySelector(".exit-about") as HTMLDivElement;
 
-const currencyPicker = document.querySelector("#currency") as HTMLSelectElement;
+export const currencyPicker = document.querySelector(
+  "#currency"
+) as HTMLSelectElement;
 
+export const cashWrapper = document.querySelectorAll(".cash");
 
-
-
-export const cashIn = document.querySelectorAll(".cash-in");
-export const cashOut = document.querySelectorAll(".cash-out");
-export const cashTotal = document.querySelectorAll(
-  ".cash-total"
-);
+const amountLabelSpan = document.querySelector("#field-amount-currency") as HTMLSpanElement
 
 export const noOfItemsElement = document.querySelector(
   ".no-of-items"
@@ -56,49 +55,77 @@ const storage = new Storage(
     cashIn: [],
     cashOut: [],
   },
-  "$"
+  "USD"
 );
 
-logo.addEventListener("click", () => {
-  console.log("Clicke3d")
-  if (about.classList.length > 1 ) {
-    about.className = "about-sec"
-  } else {
-    about.className = "about-sec slide-in-about"
-  }
-})
+// currency Setup
+export type currencyType = {
+  rate: number;
+  symbol: string;
+  code: string;
+};
+export let currencies: currencyType[] = [];
+console.log("loading..");
+fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
+  .then((response) => response.json())
+  .then((response) => {
+    currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
+    console.log("go go go");
+    for (let currencyCode in response.rates) {
+      currencies.push({
+        rate: response.rates[currencyCode],
+        symbol: "$",
+        code: currencyCode,
+      });
 
-aboutExit.addEventListener("click", () => {
-  if (about.classList.length > 1 ) {
-    about.className = "about-sec"
-  } else {
-    about.className = "about-sec slide-in-about"
-  }
-})
-
-console.log(storage.getCurrency())
-currencyPicker.addEventListener("click", () => {
-  const itemsOnScreen = document.querySelectorAll(".amount-in-item")
-  for (const item of itemsOnScreen) {
-    item.innerHTML = convertToCurrency(currencyPicker.value, item.innerHTML, storage.getCurrency())
-    console.log(currencyPicker.value, item.innerHTML)
-  }
-  cashIn.forEach(x => {
-    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
+      currencyPicker.innerHTML += `<option value=${currencyCode}>${currencyCode}</option>`;
+    }
   })
-  cashOut.forEach(x => {
-    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
-  })
-  cashTotal.forEach(x => {
-    x.innerHTML = convertToCurrency(currencyPicker.value, x.innerHTML, storage.getCurrency())
-  })
-  storage.setCurrency(currencyPicker.value)
-})
+  .catch((err) => {
+    currencies = [
+      {
+        rate: 445.45,
+        symbol: "N",
+        code: "NGN",
+      },
+      {
+        rate: 1,
+        symbol: "$",
+        code: "USD",
+      },
+    ];
+    currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
+    currencyPicker.innerHTML += `<option value=${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}>${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}</option>`;
 
+    console.error(err);
+  });
 
+export const updateCashWapper = () => {
+  cashWrapper.forEach((item) => {
+    item.innerHTML = `<span class="cash-in">${storage.getCurrency()}${formatCurrencyAmount(storage
+      .getCash("in"))
+      }</span>
+    <span class="cash-out">${storage.getCurrency()}${formatCurrencyAmount(storage
+      .getCash("out"))
+      }</span>
+    <span class="cash-equal-to">=</span>
+    <span class="cash-total">${
+      storage.getCash("total") < 0
+        ? "-" +
+          storage.getCurrency() +
+          formatCurrencyAmount(storage.getCash("total") * -1)
+        : storage.getCurrency() + formatCurrencyAmount(storage.getCash("total"))
+    }</span>`;
+  });
+};
 
 if (localStorage.getItem("fin-log-data")) {
   const itemsData = storage.getFromLocalStorage();
+
+  updateCashWapper();
+  amountLabelSpan.innerHTML = `(${storage.getCurrency()})`
+  
+
   let doc: HasFormatter;
 
   for (const index in itemsData) {
@@ -108,9 +135,9 @@ if (localStorage.getItem("fin-log-data")) {
       itemsData[index].amount,
     ];
     if (itemsData[index].type === "invoice") {
-      doc = new Invoice(...values);
+      doc = new Invoice(...values, storage.getCurrency());
     } else {
-      doc = new Payment(...values);
+      doc = new Payment(...values, storage.getCurrency());
     }
     list.render(doc, itemsData[index].type, "end", storage);
     let noOfItems = storage.getItems().length;
@@ -118,7 +145,66 @@ if (localStorage.getItem("fin-log-data")) {
   }
 } else {
   storage.setInitialDataInLocalStorage();
+  updateCashWapper();
+  amountLabelSpan.innerHTML = `(${storage.getCurrency()})`
 }
+
+
+currencyPicker.addEventListener("click", () => {
+  if (currencyPicker.value === storage.getCurrency()) {
+    return;
+  }
+
+  let newCurrencyData = currencies.filter(
+    (_currency) => _currency.code === currencyPicker.value
+  )[0];
+
+  storage.convertCashToCurrency(newCurrencyData);
+
+  const itemsData = storage.getFromLocalStorage();
+  console.log(" itemsData: ", itemsData);
+
+  let doc: HasFormatter;
+  list.empty(storage);
+  for (const index in itemsData) {
+    let values: [string, string, number] = [
+      itemsData[index].toFrom,
+      itemsData[index].details,
+      itemsData[index].amount,
+    ];
+    if (itemsData[index].type === "invoice") {
+      doc = new Invoice(...values, storage.getCurrency());
+    } else {
+      doc = new Payment(...values, storage.getCurrency());
+    }
+    
+    list.render(doc, itemsData[index].type, "end", storage);
+    
+  }
+  console.log(storage.getItems().length)
+    let noOfItems = storage.getItems().length;
+    noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;
+
+  updateCashWapper();
+  amountLabelSpan.innerHTML = `(${storage.getCurrency()})`
+});
+
+logo.addEventListener("click", () => {
+  console.log("Clicke3d");
+  if (about.classList.length > 1) {
+    about.className = "about-sec";
+  } else {
+    about.className = "about-sec slide-in-about";
+  }
+});
+
+aboutExit.addEventListener("click", () => {
+  if (about.classList.length > 1) {
+    about.className = "about-sec";
+  } else {
+    about.className = "about-sec slide-in-about";
+  }
+});
 
 form.addEventListener("submit", (e: Event) => {
   e.preventDefault();
@@ -138,25 +224,17 @@ form.addEventListener("submit", (e: Event) => {
   let doc: HasFormatter;
 
   if (type.value === "invoice") {
-    doc = new Invoice(...values);
+    doc = new Invoice(...values, storage.getCurrency());
     storage.addId("invoice");
     storage.addCash("invoice", values[2]);
-    cashIn.forEach(x => {
-      console.log(x)
-      x.textContent= `${storage.getCurrency()}${storage.getCash("in")}`;
-    })
   } else {
-    doc = new Payment(...values);
+    doc = new Payment(...values, storage.getCurrency());
     storage.addId("payment");
     storage.addCash("payment", values[2]);
-    cashOut.forEach(x => {
-      x.textContent = `${storage.getCurrency()}${storage.getCash("out")}`;
-    })
   }
 
-  cashTotal.forEach(x => {
-    x.innerHTML = `${storage.getCash("total") < 0 ? "-$" + (storage.getCash("total")*-1) : "$" + storage.getCash("total")}`;
-  })
+  updateCashWapper();
+
   list.render(doc, type.value, "end", storage);
   let noOfItems = storage.getItems().length;
   noOfItemsElement.innerText = `${noOfItems} Item${noOfItems > 1 ? "s" : ""}`;

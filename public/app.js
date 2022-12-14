@@ -109,11 +109,12 @@ else {
     updateCashWapper();
     amountLabelSpan.innerHTML = `(${storage.getCurrency()})`;
 }
-currencyPicker.addEventListener("change", () => {
-    if (currencyPicker.value === storage.getCurrency()) {
+currencyPicker.addEventListener("change", (e) => {
+    console.log("red", e.target.value); // 👉️ get selected VALUE
+    if (e.target.value === storage.getCurrency()) {
         return;
     }
-    let newCurrencyData = currencies.filter((_currency) => _currency.code === currencyPicker.value)[0];
+    let newCurrencyData = currencies.filter((_currency) => _currency.code === e.target.value)[0];
     storage.convertCashToCurrency(newCurrencyData);
     const itemsData = storage.getFromLocalStorage();
     console.log(" itemsData: ", itemsData);

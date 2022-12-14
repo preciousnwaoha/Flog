@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Urbanist:ital,wght@0,500;1,300&display=swap');
 
 :root {
   --primary: #ffffff;
@@ -32,7 +34,9 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-family: "Fredoka", sans-serif;
+  /* font-family: "Fredoka", sans-serif; */
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
   background: var(--primary);
 }
 
@@ -63,7 +67,7 @@ nav {
 
 .main-logo {
   display: inline-block;
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Satisfy', cursive;
   color: var(--secondary);
   cursor: pointer;
   font-size: 1.5rem;
@@ -199,7 +203,7 @@ main {
 
 .exit-about:hover {
   color: var(--secondary);
-  font-weight: bold;
+  font-weight: 500;
   animation: rotate 0.3s forwards;
 }
 
@@ -219,15 +223,15 @@ main {
   text-align: center;
 }
 .about-logo {
-  font-size: 32px;
-  font-family: monospace;
-  color: var(--secondary);
+  font-size: 2rem;
+  color: var(--text-dark);
+  font-weight: 500;
 }
 
 
 .about-logo span {
-  color: var(--text-dark);
-  font-family: monospace;
+  color: var(--secondary);
+  font-family: 'Satisfy', cursive;
 }
 .about-logo span:hover {
   color: var(--text-dark);

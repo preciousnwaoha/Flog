@@ -150,7 +150,7 @@ if (localStorage.getItem("fin-log-data")) {
 }
 
 
-currencyPicker.addEventListener("click", () => {
+currencyPicker.addEventListener("change", () => {
   if (currencyPicker.value === storage.getCurrency()) {
     return;
   }

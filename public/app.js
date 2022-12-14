@@ -109,7 +109,7 @@ else {
     updateCashWapper();
     amountLabelSpan.innerHTML = `(${storage.getCurrency()})`;
 }
-currencyPicker.addEventListener("click", () => {
+currencyPicker.addEventListener("change", () => {
     if (currencyPicker.value === storage.getCurrency()) {
         return;
     }

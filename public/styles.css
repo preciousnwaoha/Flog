@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 :root {
   --primary: #ffffff;
   --primary-two: #0e0f18;
@@ -61,7 +63,7 @@ nav {
 
 .main-logo {
   display: inline-block;
-  font-family: monospace;
+  font-family: 'Press Start 2P', cursive;
   color: var(--secondary);
   cursor: pointer;
   font-size: 1.5rem;
@@ -379,10 +381,10 @@ li:hover .li-del-curve {
   padding: 0px;
   display: flex;
   align-items: center;
-  text-align: center;
   justify-content: center;
+  text-align: center;
   line-height: 30px;
-  font-size: 30px;
+  font-size: 25px;
   cursor: pointer;
 }
 

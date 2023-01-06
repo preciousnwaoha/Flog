@@ -41,7 +41,7 @@ const details = document.querySelector("#details") as HTMLInputElement;
 const amount = document.querySelector("#amount") as HTMLInputElement;
 
 // List template instance
-const ul = document.querySelector(".items-list") as HTMLUListElement;
+const ul = document.querySelector(".item-list") as HTMLUListElement;
 const list = new ListTemplate(ul);
 
 // Rates Section
@@ -179,10 +179,11 @@ fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
     // currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
     // currencyPicker.innerHTML += `<option value=${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}>${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}</option>`;
 
-    console.error(err);
+    
 
     loadingElem.classList.add("hide")
     cannotFetchRates.classList.add(".show")
+    console.error(err);
   });
 
 export const updateCashWapper = () => {

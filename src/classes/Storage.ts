@@ -137,8 +137,8 @@ export class Storage {
     }
 
     this.currency = newCurrency.code
-    console.log("cash: ", this.cash)
-    console.log("currency: ", this.currency)
+    // console.log("cash: ", this.cash)
+    // console.log("currency: ", this.currency)
     this.updateCurrencyOfDataInLocalStorage();
   }
 
@@ -244,7 +244,7 @@ export class Storage {
     if (id === "p") {
       data.cash.cashOut = this.cash.cashOut;
     }
-    console.log(data.cash);
+    // console.log(data.cash);
     data.ids = this.ids;
 
     localStorage.setItem("fin-log-data", JSON.stringify(data));

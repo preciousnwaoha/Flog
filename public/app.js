@@ -22,7 +22,7 @@ const toFrom = document.querySelector("#tofrom");
 const details = document.querySelector("#details");
 const amount = document.querySelector("#amount");
 // List template instance
-const ul = document.querySelector(".items-list");
+const ul = document.querySelector(".item-list");
 const list = new ListTemplate(ul);
 // Rates Section
 const ratesSearchForm = document.querySelector(".rate-search-form");
@@ -114,9 +114,9 @@ fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
     ];
     // currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
     // currencyPicker.innerHTML += `<option value=${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}>${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}</option>`;
-    console.error(err);
     loadingElem.classList.add("hide");
     cannotFetchRates.classList.add(".show");
+    console.error(err);
 });
 export const updateCashWapper = () => {
     cashWrapper.forEach((item) => {

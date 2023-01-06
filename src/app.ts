@@ -11,15 +11,14 @@ const options = {
   headers: {
     "X-RapidAPI-Key": "a1fbba2694mshc64927b9a391e36p1ada09jsnea91e9f526ca",
     "X-RapidAPI-Host": "fixer-fixer-currency-v1.p.rapidapi.com",
+    mode: 'no-cors',
   },
+  
 };
 
 
 
-// About logic
-const logo = document.querySelector(".main-logo") as HTMLHeadingElement;
-const about = document.querySelector(".about-sec") as HTMLDivElement;
-const aboutExit = document.querySelector(".exit-about") as HTMLDivElement;
+
 
 export const currencyPicker = document.querySelector(
   "#currency"
@@ -42,8 +41,27 @@ const details = document.querySelector("#details") as HTMLInputElement;
 const amount = document.querySelector("#amount") as HTMLInputElement;
 
 // List template instance
-const ul = document.querySelector("ul") as HTMLUListElement;
+const ul = document.querySelector(".items-list") as HTMLUListElement;
 const list = new ListTemplate(ul);
+
+// Rates Section
+const ratesSearchForm = document.querySelector(".rate-search-form") as HTMLFormElement
+const ratesList = document.querySelector(".rates-list") as HTMLUListElement;
+const loadingElem = document.querySelector(".loading-rates-data") as HTMLParagraphElement;
+const rateSearch = document.querySelector("#rate-search") as HTMLInputElement;
+const cannotFetchRates = document.querySelector(".cannot-fetch-rates") as HTMLDivElement
+
+
+let ratesGlobal: {
+  success: boolean,
+  timestamp: string,
+base: string,
+date: string,
+rates: any,
+};
+let rateSearchValue = ""
+let ratesRendered: Object;
+
 
 // Initialize storage
 const storage = new Storage(
@@ -59,6 +77,7 @@ const storage = new Storage(
   "USD"
 );
 
+
 // currency Setup
 export type currencyType = {
   rate: number;
@@ -66,12 +85,67 @@ export type currencyType = {
   code: string;
 };
 export let currencies: currencyType[] = [];
-console.log("loading..");
+
+
+const renderRatesList = ( rates: any ) => {
+  if (rates === undefined) {
+    return
+  }
+  
+  ratesList.innerHTML = `<li class="rates-li">
+  <p>USD</p>
+  <p>${rates['USD'] || 1}</>
+  </li>`
+
+  Object.keys(rates).forEach((code: string) => {
+    let li = document.createElement("li") as HTMLLIElement;
+      li.classList.add("rates-li")
+      li.innerHTML = `
+        <p>${code}</p>
+        <p>${rates[code]}</>
+      `
+      ratesList.append(li)
+  }) 
+  
+}
+
+
+ratesSearchForm.onclick = (event) => {
+  event.preventDefault()
+
+  let ratesFilteredToList: string[];
+  
+  ratesFilteredToList = Object.keys(ratesGlobal.rates).filter((rate) => {
+      return (rate.includes(rateSearchValue.toLowerCase()) || rate.includes(rateSearchValue.toUpperCase()))
+  })
+
+  // console.log("rateSearchValue: ", rateSearchValue)
+  // console.log("ratesFilteredToList: ", ratesFilteredToList)
+  ratesRendered = {}
+
+  ratesFilteredToList.forEach(code => {
+    Object.assign(ratesRendered, {
+      [code]: ratesGlobal.rates[code]
+    })
+  })
+
+  // console.log(ratesRendered)
+  renderRatesList(ratesRendered)
+}
+
+rateSearch.onchange = (event) => {
+  rateSearchValue = event.target!.value
+}
+
+
 fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
   .then((response) => response.json())
   .then((response) => {
     currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
     console.log("go go go");
+  
+
+    
     for (let currencyCode in response.rates) {
       currencies.push({
         rate: response.rates[currencyCode],
@@ -80,25 +154,35 @@ fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
       });
 
       currencyPicker.innerHTML += `<option value=${currencyCode}>${currencyCode}</option>`;
+      
     }
+    loadingElem.classList.add("hide")
+    ratesGlobal = response
+    ratesRendered = response.rates
+    renderRatesList(response.rates)
+    ratesSearchForm.classList.add("show")
   })
   .catch((err) => {
+    
     currencies = [
-      {
-        rate: 445.45,
-        symbol: "N",
-        code: "NGN",
-      },
+      // {
+      //   rate: 445.45,
+      //   symbol: "N",
+      //   code: "NGN",
+      // },
       {
         rate: 1,
         symbol: "$",
         code: "USD",
       },
     ];
-    currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
-    currencyPicker.innerHTML += `<option value=${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}>${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}</option>`;
+    // currencyPicker.innerHTML = `<option value=${storage.getCurrency()}>${storage.getCurrency()}</option>`;
+    // currencyPicker.innerHTML += `<option value=${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}>${storage.getCurrency() === "NGN" ? currencies[1].code : currencies[0].code}</option>`;
 
     console.error(err);
+
+    loadingElem.classList.add("hide")
+    cannotFetchRates.classList.add(".show")
   });
 
 export const updateCashWapper = () => {
@@ -191,22 +275,7 @@ currencyPicker.addEventListener("change", (event) => {
   amountLabelSpan.innerHTML = `(${storage.getCurrency()})`
 });
 
-logo.addEventListener("click", () => {
-  console.log("Clicke3d");
-  if (about.classList.length > 1) {
-    about.className = "about-sec";
-  } else {
-    about.className = "about-sec slide-in-about";
-  }
-});
 
-aboutExit.addEventListener("click", () => {
-  if (about.classList.length > 1) {
-    about.className = "about-sec";
-  } else {
-    about.className = "about-sec slide-in-about";
-  }
-});
 
 form.addEventListener("submit", (e: Event) => {
   e.preventDefault();

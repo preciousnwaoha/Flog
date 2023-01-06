@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TypeScript Tutorial</title>
+    <title>Flog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,9 +16,27 @@
   <body>
     
     <header>
-      
-        <div title="Financial Logger" class="main-logo">flog</div>
-        <nav  >
+      <div class="menu-logo-wrapper">
+        <div title="main menu" class="main-menu">|||</div>
+        <div title="finance logger" class="main-logo">
+          <a href="#home" class="main-logo-link">flog</a>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="close-nav-menu outer-shadow hover-in-shadow">&times;</div>
+        <div class="nav-menu-inner">
+          <ul class="nav-ul">
+            <li><a href="#home" class="link-item active">home</a></li>
+            <li><a href="#rates" class="link-item">rates</a></li>
+            <li><a href="#about" class="link-item">about</a></li>
+            <!-- <li><a href="#" class="link-item">testimonial</a></li> -->
+            <!-- <li><a href="#contact" class="link-item">contact</a></li> -->
+          </ul>
+        </div>
+      </nav>
+        
+        <div class="cash-theme-wrapper">
           <div class="select-wrapper">
             <select class="currency-pick" id="currency">
               
@@ -31,20 +49,13 @@
             
           <div class="theme"><i class="fa-solid fa-palette"  ></i></div>
           
-        </nav>
+        </div>
         <div class="cash cash-sm">
           
         </div>
       
     </header>
-    <section class="about-sec">
-      <div class="exit-about">&times;</div>
-      <div class="about-content">
-        <h1 class="about-logo">About <span>flog</span></h1>
-        <p class="about">Wanna have an simple way to keep track of your day to day cash flow, fLog is your new easy to use Finance Log tool that can help you note down your cash ins and outs, who you owe, what cash is comming, for what job and how much exactly. Hint: if your eye hurts double tap the paint icon.</p>
-      </div>
-      
-    </section>
+    
   
 
 
@@ -102,53 +113,91 @@
     <!-- effect wrap end -->
 
     <main>
-      <div class="split-container">
+      
+      <section class="home-section section active" id="home">
+        <div class="split-container">
 
   
-        <div class="form-container">
-          <form class="new-item-form glass-div">
-            <div class="field">
-              <label>Type:</label>
-              <select id="type" >
-                <option value="invoice">Invoice</option>
-                <option value="payment">Payment</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>To / From:</label>
-              <input type="text" id="tofrom" placeholder="Dave" required/>
-            </div>
-            <div class="field">
-              <label>Details:</label>
-              <input type="text" id="details" placeholder="Plumbing Work" required/>
-            </div>
-            <div class="field">
-              <label>Amount <span id="field-amount-currency"></span>:</label>
-              <input type="number" step=".01" id="amount" min="0" placeholder="0.00" required/>
-            </div>
-            <button>Add Item</button>
-          </form>
-        </div>
-
-
-        <div class="wrapper">
-          <!-- output list -->
-          <div class="ul-holder">
-            <div class="ul-gap ul-gap-up"></div>
-            <div class="ul-gap ul-gap-down"></div>
-            <ul class="item-list"></ul>
-            
-            <div class="no-of-items">No Item</div>
+          <div class="form-container">
+            <form class="new-item-form glass-div">
+              <div class="field">
+                <label>Type:</label>
+                <select id="type" >
+                  <option value="invoice">Invoice</option>
+                  <option value="payment">Payment</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>To / From:</label>
+                <input type="text" id="tofrom" placeholder="Dave" required/>
+              </div>
+              <div class="field">
+                <label>Details:</label>
+                <input type="text" id="details" placeholder="Plumbing Work" required/>
+              </div>
+              <div class="field">
+                <label>Amount <span id="field-amount-currency"></span>:</label>
+                <input type="number" step=".01" id="amount" min="0" placeholder="0.00" required/>
+              </div>
+              <button>Add Item</button>
+            </form>
           </div>
-          
+  
+  
+          <div class="wrapper">
+            <!-- output list -->
+            <div class="ul-holder">
+              <div class="ul-gap ul-gap-up"></div>
+              <div class="ul-gap ul-gap-down"></div>
+              <ul class="item-list"></ul>
+              
+              <div class="no-of-items">No Item</div>
+            </div>
+            
+          </div>
         </div>
+      </section>
+    <!-- home section end -->
+
+    <!-- services section start -->
+    <section class="rates-section section" id="rates">
+      <h1>Currency Rates</h1>
+      <p class="loading-rates-data">Loading...</p>
+      <div class="cannot-fetch-rates">
+        <p>Something went wrong <br/> Can't fetch rates.</p>
       </div>
+      <form class="rate-search-form">
+        <label for="rate-search">Search</label>
+        <div>
+          <input type="text" placeholder="USD" id="rate-search"  />
+          <button type="submit">S</button>
+        </div>
+      </form>
+      <ul class="rates-list"></ul>
+
+    </section>
+    <!-- services section end -->
+
+    <!-- about section start -->
+    <section class="about-section section" id="about">
+        <div class="about-content">
+          <h1 class="about-logo">About <span>flog</span></h1>
+          <p class="about">Wanna have an simple way to keep track of your day to day cash flow, fLog is your new easy to use Finance Log tool that can help you note down your cash ins and outs, who you owe, what cash is comming, for what job and how much exactly. Hint: if your eye hurts double tap the paint icon.</p>
+        </div>
+        
+    </section>
+    <!-- about section end -->
+
+    
+
+    
     </main>
 
     
     <footer>
-      <a href="https://github.com/preciousnwaoha">&copy; Precios Nwaoha</a>
+      <a href="https://github.com/preciousnwaoha">&copy; Precious Nwaoha</a>
     </footer>
+    <script type="module" src="./navigation.js"></script>
     <script type="module" src="./theme.js"></script>
     <script type="module" src="./app.js"></script>
   </body>

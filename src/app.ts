@@ -134,7 +134,8 @@ ratesSearchForm.onclick = (event) => {
 }
 
 rateSearch.onchange = (event) => {
-  rateSearchValue = event.target!.value
+  const target = event.target as HTMLInputElement;
+  rateSearchValue = target.value
 }
 
 

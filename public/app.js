@@ -78,7 +78,8 @@ ratesSearchForm.onclick = (event) => {
     renderRatesList(ratesRendered);
 };
 rateSearch.onchange = (event) => {
-    rateSearchValue = event.target.value;
+    const target = event.target;
+    rateSearchValue = target.value;
 };
 fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/latest?base=USD", options)
     .then((response) => response.json())

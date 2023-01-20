@@ -22,7 +22,6 @@ This web app allows users to keep track of their finances in form of logs. Thy c
 ### Illustrations
 ![Hompage](./images/flog-1.png)
 
-Not available for now.
 
 ### **Technologies**
 

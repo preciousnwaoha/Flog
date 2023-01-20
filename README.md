@@ -4,17 +4,15 @@
 
 ### Table of Content
 
-<p align="center" >
-| [Description](#description)
-| [Technologies](#technologies)
-| [Installation](#installation)
-| [Usage](#usage)
-| [Documentation](#documentation)
-| [Roadmap](#roadmap)
-| [Project Status](#project-status)
-| [Source](#source)
-| [License](#license)
-</p>
+- [Description](#description)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Roadmap](#roadmap)
+- [Project Status](#project-status)
+- [Source](#source)
+- [License](#license)
 
 
 ### **Description**
